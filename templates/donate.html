@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Donate Food — FoodCycle{% endblock %}
+{% block content %}
+<div class="form-page">
+  <div class="form-intro">
+    <span class="eyebrow">Create a rescue</span>
+    <h1>Good food deserves another destination.</h1>
+    <p>Add the details below. The future matching engine will use these fields to find the best nearby NGO.</p>
+  </div>
+  <form class="large-form" method="POST">
+    <div class="form-grid">
+      <label>Food name<input name="food_name" required placeholder="e.g. Cooked rice & dal"></label>
+      <label>Food type<select name="food_type"><option>Cooked meal</option><option>Packaged food</option><option>Bakery</option><option>Fruits & vegetables</option><option>Other</option></select></label>
+      <label>Quantity (kg)<input type="number" name="quantity" min="1" required placeholder="10"></label>
+      <label>Estimated servings<input type="number" name="servings" min="1" required placeholder="25"></label>
+      <label>Best before / expiry<input type="datetime-local" name="expiry" required></label>
+      <label>Pickup address<input name="address" required placeholder="Street, area, city"></label>
+      <label class="full-field">Notes<textarea name="notes" rows="4" placeholder="Allergy information, packaging, pickup instructions..."></textarea></label>
+    </div>
+    <button class="btn primary" type="submit">Publish rescue opportunity →</button>
+  </form>
+</div>
+{% endblock %}

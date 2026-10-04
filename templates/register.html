@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Join FoodCycle{% endblock %}
+{% block content %}
+<div class="auth-page">
+  <div class="auth-card">
+    <span class="eyebrow">Join the movement</span>
+    <h1>Create your account.</h1>
+    <p>Choose how you want to contribute.</p>
+    <form method="POST">
+      <label>Name<input type="text" name="name" required placeholder="Your name"></label>
+      <label>Email<input type="email" name="email" required placeholder="you@example.com"></label>
+      <label>Password<input type="password" name="password" required minlength="6" placeholder="Minimum 6 characters"></label>
+      <label>Account type
+        <select name="role">
+          <option value="donor">🍱 Food Donor</option>
+          <option value="ngo">🏢 NGO / Organization</option>
+        </select>
+      </label>
+      <button class="btn primary full" type="submit">Create account →</button>
+    </form>
+    <p class="auth-bottom">Already registered? <a href="{{ url_for('login') }}">Login</a></p>
+  </div>
+</div>
+{% endblock %}

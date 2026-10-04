@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}FoodCycle{% endblock %}</title>
+    <meta name="description" content="FoodCycle — turn surplus food into meaningful impact.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+
+    <nav class="navbar">
+        <a class="brand" href="{{ url_for('home') }}">
+            <span class="brand-mark">F</span>
+            <span>Food<span>Cycle</span></span>
+        </a>
+
+        <div class="nav-links">
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('ngos') }}">Nearby NGOs</a>
+            {% if session.get("user_id") %}
+                <a href="{{ url_for('dashboard') }}">Dashboard</a>
+                {% if session.get("role") == "donor" %}
+                    <a class="nav-cta" href="{{ url_for('donate') }}">Donate Food</a>
+                {% endif %}
+                <a href="{{ url_for('logout') }}">Logout</a>
+            {% else %}
+                <a href="{{ url_for('login') }}">Login</a>
+                <a class="nav-cta" href="{{ url_for('register') }}">Join FoodCycle</a>
+            {% endif %}
+        </div>
+
+        <button class="menu-btn" onclick="document.body.classList.toggle('menu-open')">☰</button>
+    </nav>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-wrap">
+          {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <main>{% block content %}{% endblock %}</main>
+
+    <footer>
+        <div>
+            <strong>FoodCycle</strong>
+            <span>Save food. Share hope. Build a better tomorrow.</span>
+        </div>
+        <span>© {{ current_year }} FoodCycle</span>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

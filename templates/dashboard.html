@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — FoodCycle{% endblock %}
+{% block content %}
+<section class="dashboard">
+  <div class="dash-top">
+    <div>
+      <span class="eyebrow">Your FoodCycle</span>
+      <h1>Hello, {{ user.name.split()[0] }} 👋</h1>
+      <p>Track your contribution and keep the cycle moving.</p>
+    </div>
+    {% if user.role == "donor" %}
+      <a class="btn primary" href="{{ url_for('donate') }}">+ New donation</a>
+    {% endif %}
+  </div>
+
+  <div class="metric-grid">
+    <div class="metric"><span>Role</span><strong>{{ user.role|capitalize }}</strong><small>Active account</small></div>
+    <div class="metric"><span>Donations</span><strong>{{ donations|length }}</strong><small>Your visible activity</small></div>
+    <div class="metric"><span>Impact</span><strong>{{ donations|sum(attribute='servings') }}</strong><small>Meal servings</small></div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><h2>Donation activity</h2><span>{{ donations|length }} records</span></div>
+    {% if donations %}
+      <div class="donation-list">
+      {% for d in donations %}
+        <div class="donation-row">
+          <div class="mini-food">🍲</div>
+          <div><strong>{{ d.food_name }}</strong><small>{{ d.quantity }} kg · {{ d.servings }} servings · {{ d.food_type }}</small></div>
+          <span class="pill {{ d.status }}">{{ d.status|capitalize }}</span>
+        </div>
+      {% endfor %}
+      </div>
+    {% else %}
+      <div class="empty"><div>🍃</div><h3>No donations yet</h3><p>Your first donation can start the cycle.</p>{% if user.role == "donor" %}<a class="btn primary" href="{{ url_for('donate') }}">Donate food</a>{% endif %}</div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Nearby NGOs — FoodCycle{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+{% endblock %}
+{% block content %}
+<section class="map-page">
+  <div class="map-heading">
+    <div><span class="eyebrow">Rescue network</span><h1>Find NGOs near you.</h1><p>Explore organizations currently accepting food donations.</p></div>
+    <button class="btn ghost" onclick="findMe()">📍 Use my location</button>
+  </div>
+  <div class="map-layout">
+    <div id="map"></div>
+    <aside class="ngo-list">
+      <div class="panel-head"><h2>Accepting donations</h2><span>{{ ngos|length }}</span></div>
+      {% for n in ngos %}
+      <article class="ngo-card" data-lat="{{ n.latitude }}" data-lng="{{ n.longitude }}">
+        <div class="ngo-icon">🏢</div>
+        <div><strong>{{ n.name }}</strong><small>{{ n.address }}</small><small>☎ {{ n.phone }}</small></div>
+        <span class="open-dot">●</span>
+      </article>
+      {% else %}
+      <p class="muted">No NGO profiles yet. <a href="{{ url_for('seed_demo_data') }}">Load demo data</a>.</p>
+      {% endfor %}
+      {% if not ngos %}<a class="btn primary full" href="{{ url_for('seed_demo_data') }}">Load demo NGOs</a>{% endif %}
+    </aside>
+  </div>
+  <p class="map-note">Demo locations are provided for development. In the next stage, NGO onboarding and verified live locations will be added.</p>
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+const map = L.map('map').setView([12.9716, 77.5946], 11);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 19, attribution: '&copy; OpenStreetMap'}).addTo(map);
+document.querySelectorAll('.ngo-card').forEach(card => {
+  const lat = Number(card.dataset.lat), lng = Number(card.dataset.lng);
+  L.marker([lat,lng]).addTo(map).bindPopup(card.querySelector('strong').textContent);
+});
+function findMe(){
+  if(!navigator.geolocation) return alert("Location is not supported by this browser.");
+  navigator.geolocation.getCurrentPosition(pos => {
+    const {latitude, longitude} = pos.coords;
+    map.setView([latitude, longitude], 14);
+    L.circleMarker([latitude, longitude], {radius: 9}).addTo(map).bindPopup("You are here").openPopup();
+  }, () => alert("Please allow location access to use this feature."));
+}
+</script>
+{% endblock %}

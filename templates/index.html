@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}FoodCycle — Save Food. Share Hope.{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-copy reveal">
+        <div class="eyebrow"><span class="pulse"></span> Food rescue, reimagined</div>
+        <h1>Turn <span>surplus</span> into <em>impact.</em></h1>
+        <p class="hero-text">FoodCycle connects people and organizations with surplus food to nearby NGOs — helping good food reach people instead of landfills.</p>
+        <div class="hero-actions">
+            <a class="btn primary" href="{{ url_for('register') }}">Start Donating <span>→</span></a>
+            <a class="btn ghost" href="{{ url_for('ngos') }}">Explore NGOs</a>
+        </div>
+        <div class="trust-row">
+            <div class="avatar-stack"><i>V</i><i>A</i><i>K</i><i>+</i></div>
+            <span>Built for communities that care.</span>
+        </div>
+    </div>
+
+    <div class="hero-visual reveal delay">
+        <div class="orbit orbit-a"></div>
+        <div class="orbit orbit-b"></div>
+        <div class="food-card main-food">
+            <div class="food-icon">🥗</div>
+            <div>
+                <small>RESCUE OPPORTUNITY</small>
+                <strong>Fresh surplus meals</strong>
+                <span>12.4 kg · 2.1 km away</span>
+            </div>
+            <b class="status-dot">LIVE</b>
+        </div>
+        <div class="float-card top-card"><span>♻️</span><b>Less waste</b><small>More purpose</small></div>
+        <div class="float-card bottom-card"><span>❤️</span><b>38 meals</b><small>rescued today</small></div>
+    </div>
+</section>
+
+<section class="impact-strip">
+    <div><strong data-count="{{ stats.servings }}">0</strong><span>Meals listed</span></div>
+    <div><strong data-count="{{ stats.donations }}">0</strong><span>Donations</span></div>
+    <div><strong data-count="{{ stats.ngos }}">0</strong><span>NGOs connected</span></div>
+    <div><strong data-count="{{ stats.donors }}">0</strong><span>Donors</span></div>
+</section>
+
+<section class="section">
+    <div class="section-heading">
+        <div>
+            <span class="eyebrow">How FoodCycle works</span>
+            <h2>One simple cycle.<br><span>Real-world impact.</span></h2>
+        </div>
+        <p>From a leftover meal to a meaningful moment — every step is visible and trackable.</p>
+    </div>
+
+    <div class="steps">
+        <article class="step-card"><span>01</span><div>🍱</div><h3>List surplus</h3><p>Tell us what food you have, how much is available and when it should be rescued.</p></article>
+        <article class="step-card active"><span>02</span><div>📍</div><h3>Match nearby</h3><p>FoodCycle finds suitable NGOs based on location, capacity, food type and urgency.</p></article>
+        <article class="step-card"><span>03</span><div>🚴</div><h3>Rescue & deliver</h3><p>An NGO or volunteer coordinates pickup and marks the donation through its journey.</p></article>
+    </div>
+</section>
+
+<section class="feature-banner">
+    <div>
+        <span class="eyebrow">Coming next</span>
+        <h2>Smart Rescue Score™</h2>
+        <p>FoodCycle will prioritize donations using urgency, distance, quantity and NGO requirements — making rescue faster and smarter.</p>
+    </div>
+    <div class="score-demo">
+        <small>RESCUE PRIORITY</small>
+        <strong>92</strong>
+        <span>HIGH PRIORITY</span>
+    </div>
+</section>
+{% endblock %}
